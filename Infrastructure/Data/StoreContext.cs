@@ -15,5 +15,13 @@ namespace Infrastructure.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().HasOne(b => b.ProductBrand).WithMany().HasForeignKey(p => p.ProductBrandId);
+            modelBuilder.Entity<Product>().HasOne(t => t.ProductType).WithMany().HasForeignKey(p => p.ProductTypeId);
+        }
     }
 }
